@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ArrowLeft, Bell } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import { NoticeForm } from '../../components/NoticeForm';
 
 export default function EditNotice() {
@@ -27,6 +28,7 @@ export default function EditNotice() {
       } catch (err: any) {
         console.error(err);
         setError(err.message || 'Failed to fetch notice');
+        toast.error(err.message || 'Failed to fetch notice');
       } finally {
         setIsLoading(false);
       }
@@ -53,9 +55,11 @@ export default function EditNotice() {
         throw new Error(err.message || 'Failed to update notice');
       }
 
+      toast.success('Notice updated successfully!');
       router.push('/');
     } catch (err: any) {
       console.error(err);
+      toast.error(err.message || 'Failed to update notice');
       setError(err.message || 'Failed to update notice');
     } finally {
       setIsSubmitting(false);

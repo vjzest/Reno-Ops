@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { PlusCircle, Bell, LayoutDashboard } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import { NoticeCard, Notice } from '../components/NoticeCard';
 import { DeleteModal } from '../components/DeleteModal';
 
@@ -50,9 +51,10 @@ export default function Home() {
       if (!res.ok) throw new Error('Failed to delete notice');
       
       setNotices(notices.filter(n => n.id !== noticeToDelete.id));
+      toast.success('Notice deleted successfully!');
     } catch (error) {
       console.error(error);
-      alert('Failed to delete notice. Please try again.');
+      toast.error('Failed to delete notice. Please try again.');
     } finally {
       setIsDeleteModalOpen(false);
       setNoticeToDelete(null);
